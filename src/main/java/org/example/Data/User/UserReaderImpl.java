@@ -1,29 +1,30 @@
-package org.example.Data.CSV;
+package org.example.Data.User;
 
-import org.example.Data.People.People;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CSVPharse extends CSV {
-
-
-    public CSVPharse(Path dirPath) {
-        super(dirPath);
+public class UserReaderImpl implements UserReader{
+    public UserReaderImpl(Path path) {
+        this.path = path;
     }
 
-    public List<People> parseFilePeople(Path fileName) {
-        List<People> people = new ArrayList<>();
+    protected Path path;
 
-        try (BufferedReader reader = Files.newBufferedReader(Path.of(dirPath + File.separator + fileName))) {
+    @Override
+    public List<User> read() {
+        List<User> ecoUsers = new ArrayList<>();
+
+        try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             String line;
             reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] val = line.split("\\|");
-                People user = new People(
+                User user = new User(
                         Integer.parseInt(val[0]),
                         val[1],
                         Integer.parseInt(val[2]),
@@ -31,12 +32,12 @@ public class CSVPharse extends CSV {
                         Integer.parseInt(val[4]),
                         Integer.parseInt(val[5]),
                         Integer.parseInt(val[6]));
-                people.add(user);
+                ecoUsers.add(user);
             }
 
         } catch (IOException e) {
             throw new RuntimeException("Не удалось открыть файл");
         }
-        return people;
+        return ecoUsers;
     }
 }

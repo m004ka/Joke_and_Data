@@ -1,10 +1,10 @@
-package org.example.Data.People;
+package org.example.Data.User;
 
 import lombok.Getter;
 
 @Getter
-public class People {
-    public People(int id, String name, int waterDay, int waterNight, int gasCount, int electroDay, int electroNight) {
+public class User {
+    public User(int id, String name, int waterDay, int waterNight, int gasCount, int electroDay, int electroNight) {
         this.id = id;
         this.name = name;
         this.waterCountDay = waterDay;
@@ -30,6 +30,9 @@ public class People {
     int water;
     int electro;
 
+    public boolean isEco(User user, int maxCount) {
+        return maxCount > user.getWater() && maxCount > user.getGasCount() && maxCount > user.getElectro();
+    }
 
     @Override
     public String toString() {

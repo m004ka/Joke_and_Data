@@ -1,34 +1,34 @@
-package org.example.Data.CSV;
-
-import org.example.Data.People.People;
+package org.example.Data.User;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
 
-public class CSVWrite extends CSV {
+public class UserWriterImpl implements UserWriter {
 
     private final String form = "id|name|waterCountDay|waterCountNight|gasCount|electroCountDay|electroCountNight";
 
-    public CSVWrite(Path dirPath) {
-        super(dirPath);
+    public UserWriterImpl(Path path) {
+        this.path = path;
     }
 
+    Path path;
 
-    public void writeFilePeople(Path fileName, List<People> people) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dirPath + File.separator + fileName))) {
+    @Override
+    public void write(List<User> users) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.toFile(), StandardCharsets.UTF_8))) {
             writer.write(form);
             writer.newLine();
-            for (People user : people) {
+            for (User user : users) {
                 writer.write(user.toString());
                 writer.newLine();
             }
         } catch (IOException e) {
             throw new RuntimeException("Не удалось произвести запись в файл");
         }
-
     }
 }

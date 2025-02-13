@@ -1,11 +1,8 @@
 package org.example.Data;
 
-import org.example.Data.CSV.CSVPharse;
-import org.example.Data.CSV.CSVWrite;
-import org.example.Data.People.EcoChecker;
-import org.example.Data.People.EcoUsersFilter;
-import org.example.Data.People.People;
+import org.example.Data.User.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,22 +21,23 @@ public class Main {
     public static void main(String[] args) throws IOException {
         System.out.print("Введите абсолютный путь до папки: ");
         Scanner sc = new Scanner(System.in);
-        String InputFilePath = sc.nextLine();
+        String inputFilePath = sc.nextLine();
 
         System.out.print("Введите максимальное потребление ресурса: ");
         int maxConsumption = sc.nextInt();
         sc.nextLine();
-        Path inputFile = Paths.get(InputFilePath);
+        Path inputFile = Paths.get(inputFilePath);
         checkPath(inputFile);
 
-        CSVPharse csvRead = new CSVPharse(inputFile.getParent());
-        List<People> people = csvRead.parseFilePeople(inputFile.getFileName());
+        UserReader Reader = new UserReaderImpl(inputFile);
+        List<User> users = Reader.read();
 
-        EcoUsersFilter checker = new EcoUsersFilter(new EcoChecker());
-        List<People> ecoPeople = checker.getEcoUsers(people, maxConsumption);
+        UserFilter Filter = new UserFilterImpl(maxConsumption);
+        List<User> ecoUsers = Filter.filter(users);
 
-        CSVWrite csvWriter = new CSVWrite(inputFile.getParent());
-        csvWriter.writeFilePeople(Path.of("eco_data.csv"), ecoPeople);
+        Path outputFilePath = Path.of(inputFile.getParent() + File.separator + "eco_data.csv");
+        UserWriter writer = new UserWriterImpl(outputFilePath);
+        writer.write(ecoUsers);
     }
 
 }
