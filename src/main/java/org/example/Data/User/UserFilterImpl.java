@@ -3,11 +3,12 @@ package org.example.Data.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserFilterImpl implements  UserFilter {
+public class UserFilterImpl implements UserFilter {
 
     public UserFilterImpl(int maxCount) {
         this.maxCount = maxCount;
     }
+
     int maxCount;
 
     @Override

@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserReaderImpl implements UserReader{
+public class UserReaderImpl implements UserReader {
     public UserReaderImpl(Path path) {
         this.path = path;
     }
