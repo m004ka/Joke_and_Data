@@ -3,14 +3,11 @@ package org.example.Data.User;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
 
 public class UserWriterImpl implements UserWriter {
-
-    private final String form = "id|name|waterCountDay|waterCountNight|gasCount|electroCountDay|electroCountNight";
 
     public UserWriterImpl(Path path) {
         this.path = path;
@@ -21,6 +18,7 @@ public class UserWriterImpl implements UserWriter {
     @Override
     public void write(List<User> users) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.toFile(), StandardCharsets.UTF_8))) {
+            String form = "id|name|waterCountDay|waterCountNight|gasCount|electroCountDay|electroCountNight";
             writer.write(form);
             writer.newLine();
             for (User user : users) {
