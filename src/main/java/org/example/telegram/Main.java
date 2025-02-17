@@ -36,7 +36,7 @@ public class Main {
 //        String report = repService.reportHistory(reports, "Ren", 3);
 //        System.out.println(report);
 //
-        String report = repService.reportHistory(reports, "Ren", 300);
+        String report = repService.reportHistory(reports, "Ren", 3);
         System.out.println(report);
 
 //        String report = repService.reportHistory(reports, "Danone", 1);
