@@ -27,9 +27,9 @@ public class Report {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
-        str.append(studentUserName + "\n");
-        str.append(date + "\n");
-        str.append(hours + "\n");
+        str.append(studentUserName).append("\n");
+        str.append(date).append("\n");
+        str.append(hours).append("\n");
         str.append(title);
 
         return str.toString();
