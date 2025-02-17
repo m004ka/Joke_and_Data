@@ -2,6 +2,9 @@ package org.example.Data.User;
 
 import lombok.Getter;
 
+import java.math.BigDecimal;
+import java.util.function.Function;
+
 @Getter
 public class User {
     public User(int id, String name, int waterDay, int waterNight, int gasCount, int electroDay, int electroNight) {
@@ -30,8 +33,11 @@ public class User {
     int water;
     int electro;
 
-    public boolean isEco(User user, int maxCount) {
-        return maxCount > user.getWater() && maxCount > user.getGasCount() && maxCount > user.getElectro();
+    public <T> boolean isEco(User user, int maxCount, Function<User, T> resource) {
+        BigDecimal maxValue = new BigDecimal(maxCount);
+        BigDecimal value = new BigDecimal(resource.apply(user).toString());
+
+        return maxValue.compareTo(value) >= 0;
     }
 
     @Override

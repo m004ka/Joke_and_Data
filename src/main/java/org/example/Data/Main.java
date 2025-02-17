@@ -29,10 +29,29 @@ public class Main {
         Path inputFile = Paths.get(inputFilePath);
         checkPath(inputFile);
 
+        System.out.print("Введите по какому ресурсу вы хотите проверить потребление (вода, газ, электричество) ");
+        String inputRes = sc.nextLine();
+        Resource resource;
+
+        switch (inputRes.toLowerCase()) {
+            case "вода":
+                resource = Resource.WATER;
+                break;
+            case "газ":
+                resource = Resource.GAS;
+                break;
+            case "электричество":
+                resource = Resource.ELECTRO;
+                break;
+            default:
+                System.out.println("Вы ввели несуществующий параметр");
+                return;
+        }
+
         UserReader Reader = new UserReaderImpl(inputFile);
         List<User> users = Reader.read();
 
-        UserFilter Filter = new UserFilterImpl(maxConsumption);
+        UserFilter Filter = new UserFilterImpl(maxConsumption, resource.getResource());
         List<User> ecoUsers = Filter.filter(users);
 
         Path outputFilePath = Path.of(inputFile.getParent() + File.separator + "eco_data.csv");
