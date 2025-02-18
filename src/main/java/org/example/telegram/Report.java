@@ -1,7 +1,6 @@
 package org.example.telegram;
 
 import lombok.Getter;
-
 import java.time.LocalDate;
 
 @Getter
